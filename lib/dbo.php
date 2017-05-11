@@ -76,8 +76,8 @@ abstract class Dbo
     **/
   public function fetchStmt()
   {
-		$args = func_get_args();
-		$sql = array_shift($args);
+    $args = func_get_args();
+    $sql = array_shift($args);
     $rows = array();
     $sth = $this->pdo->prepare($sql);
     $sth->execute($args);
