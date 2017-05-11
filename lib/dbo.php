@@ -20,21 +20,21 @@ abstract class Dbo
 
   /** @property string **/
   protected $host;
-  
+
   /** @property string **/
   protected $name;
-  
+
   /** @property string **/
   protected $user;
-  
+
   /** @property string **/
   protected $pass;
 
   /** @method Constructor **/
   public function __construct() {
-  
+
     $this->error = false;
-  
+
     try {
       $this->pdo = new PDO('mysql:host='.$this->host.';dbname='.$this->name, $this->user, $this->pass);
       $errorInfo = $this->pdo->errorInfo();
@@ -42,38 +42,38 @@ abstract class Dbo
         $this->error = $errorInfo[2];
       }
     } catch (PDOException $e) {
-    		$this->error = $e->getMessage();
+      $this->error = $e->getMessage();
     }
-  
+
     print $this->error;
-  
+
   } // ./Constructor
-  
-  /** @method Execute SQL
-    * @param  string (sql statement)
-    * @return integer (affected rows)
-    **/
-  }
+
+  /** @method ExecuteSQL
+   * @param  string (sql statement)
+   * @return integer (affected rows)
+   **/
+
   public function executeSQL($sql) {
     return $this->pdo->exec($sql);
   } // ./executeSQL
 
-  /** @method Insert Statement
-    * @param  string (sql statement)
-    * @param  mixed (array of values)
-    * @return integer (affected rows)
-    **/
+  /** @method insertStatement
+   * @param  string (sql statement)
+   * @param  mixed (array of values)
+   * @return integer (affected rows)
+   **/
   public function insertStmt($sql, $values) {
     $sth = $this->pdo->prepare($sql);
     $sth->execute($values);
     return $this->pdo->lastInsertId();
   } // ./insertStmt
 
-  /** @method Fetch Statement
-    * @param  string (sql statement)
-    * @param  any (values)
-    * @return mixed (array of row objects)
-    **/
+  /** @method fetchStatement
+   * @param  string (sql statement)
+   * @param  any (values)
+   * @return mixed (array of row objects)
+   **/
   public function fetchStmt()
   {
     $args = func_get_args();
